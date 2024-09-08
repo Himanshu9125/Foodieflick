@@ -1,7 +1,8 @@
 import  express  from "express";
-import userController from "../Controller/userController";
-const Router=express.Router();
+import{jwtCheck} from "../middleware/auth"
+import MyUserController from "../Controller/userController";
+const router=express.Router();
 
-Router.post('/',userController.createCurrentUser);
-// Router.get('/',userController.createCurrentUser);
-export default Router;
+router.post('/',jwtCheck,MyUserController.createCurrentUser);
+// router.get('/',userController.createCurrentUser);
+export default router;

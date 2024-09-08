@@ -20,7 +20,7 @@ const connectdb =async ()=>{
 const app = express();
 app.use(cors());
 app.use(express.json());
-app.use('/api/user',userRoute);
+app.use('/api/v1/user',userRoute);
 const PORT = process.env.PORT || 5000; 
 connectdb();
 app.listen(PORT, () => {
