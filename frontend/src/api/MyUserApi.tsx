@@ -8,32 +8,35 @@ type CreateUserRequest = {
   email: string;
 };
 
-const createUserApi = async (user: CreateUserRequest) => {
-  const { getAccessTokenSilently } = useAuth0();
-  const accessTocken = await getAccessTokenSilently();
-  const response = await fetch(`${API_BASE_URL}/api/user`, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${accessTocken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to create user");
-  }
-
-  return response.json();
-};
-
 export const useCreateMyUser = () => {
+  // Move useAuth0 outside the nested function
+  const { getAccessTokenSilently } = useAuth0();
+
+  const createMyUserRequest = async (user: CreateUserRequest) => {
+    const accessTocken = await getAccessTokenSilently();
+    console.log(accessTocken);
+    const response = await fetch(`${API_BASE_URL}/api/user`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessTocken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to create user");
+    }
+
+    return response.json();
+  };
+
   const {
     mutateAsync: createUser,
     isLoading,
     isError,
     isSuccess,
-  } = useMutation(createUserApi);
+  } = useMutation(createMyUserRequest);
 
   return {
     createUser,

@@ -9,7 +9,6 @@ type Props = {
 };
 
 export const Auth0providerNavigate = ({ children }: Props) => {
-  const { getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
   const domain = import.meta.env.VITE_AUTH0_DOMAIN;
   const clientId = import.meta.env.VITE_AUTH0_CLIENT_ID;
@@ -23,8 +22,6 @@ export const Auth0providerNavigate = ({ children }: Props) => {
   }
 
   const onRedirectCallback = async (appState?: AppState, user?: User) => {
-    const token = await getAccessTokenSilently();
-    console.log(token);
     navigate("/auth-callback");
   };
 
@@ -32,7 +29,9 @@ export const Auth0providerNavigate = ({ children }: Props) => {
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      authorizationParams={{ redirect_uri: redirectUri }}
+      authorizationParams={{
+        redirect_uri: redirectUri,
+      }}
       onRedirectCallback={onRedirectCallback}
     >
       {children}

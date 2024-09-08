@@ -2,13 +2,13 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import { Auth0providerNavigate } from "./auth/Auth0providerNavigate";
+import { Auth0providerNavigate } from "./auth/Auth0providerNavigate.tsx";
 import { AppRoutes } from "./AppRoutes.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus:false,
+      refetchOnWindowFocus: false,
     },
   },
 });
